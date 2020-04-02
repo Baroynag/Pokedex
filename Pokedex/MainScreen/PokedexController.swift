@@ -45,7 +45,8 @@ class PokedexController: UICollectionViewController {
     //MARK: - Selectors
     
     @objc private func showSearchBar(){
-        configureSearchBar()
+        configureSearchBar(shouldShow: true)
+        
     }
     
     @objc func handleDismissal() {
@@ -86,16 +87,28 @@ class PokedexController: UICollectionViewController {
         visualEffectView.addGestureRecognizer(gesture)
     }
     
-    private func configureSearchBar(){
-        searchBar = UISearchBar()
-        searchBar.delegate = self
-        searchBar.sizeToFit()
-        searchBar.showsCancelButton = true
-        searchBar.becomeFirstResponder()
-        searchBar.tintColor = .white
+    private func configureSearchBar(shouldShow: Bool){
+        if shouldShow{
+            
+            searchBar = UISearchBar()
+            searchBar.delegate = self
+            searchBar.sizeToFit()
+            searchBar.showsCancelButton = true
+            searchBar.becomeFirstResponder()
+            searchBar.tintColor = .white
+            navigationItem.rightBarButtonItem = nil
+            navigationItem.titleView = searchBar
+        } else{
+            navigationItem.titleView = nil
+            configureSearchBarButton()
+            inSearchMode = false
+            collectionView.reloadData()
+        }
         
-        navigationItem.rightBarButtonItem = nil
-        navigationItem.titleView = searchBar
+        
+        
+        
+        
         
     }
     
@@ -105,6 +118,13 @@ class PokedexController: UICollectionViewController {
         
     }
     
+    func showPokemonInfoController(withPokemon pokemon: Pokemon){
+        
+        let controller = PokemonInfoController()
+        controller.pokemon = pokemon
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func dismissInfoView(pokemon: Pokemon?) {
         UIView.animate(withDuration: 0.5, animations: {
             self.visualEffectView.alpha = 0
@@ -112,6 +132,9 @@ class PokedexController: UICollectionViewController {
             self.infoView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
         }) { (_) in
             self.infoView.removeFromSuperview()
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
+            guard let pokemon = pokemon else {return}
+            self.showPokemonInfoController(withPokemon: pokemon)
         }
     }
     
@@ -138,9 +161,24 @@ extension PokedexController{
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let controller = PokemonInfoController()
-        controller.pokemon = inSearchMode ? filteredPokemon[indexPath.row] : pokemon[indexPath.row]
-        navigationController?.pushViewController(controller, animated: true)
+        let poke = inSearchMode ? filteredPokemon[indexPath.row] : pokemon[indexPath.row]
+        
+        var pokemonEvoArray = [Pokemon]()
+        
+        if let evoChain = poke.evolutionChain{
+        
+            let evolutionChain = EvolutionChain(evolutionArray: evoChain)
+            let evoIds = evolutionChain.evolutionIds
+        
+            evoIds.forEach{ (id) in
+                
+                pokemonEvoArray.append(pokemon[id - 1])
+            }
+        
+            poke.evoArray = pokemonEvoArray
+        }
+        
+        showPokemonInfoController(withPokemon: poke)
     }
     
 }
@@ -168,10 +206,7 @@ extension PokedexController: UICollectionViewDelegateFlowLayout{
 extension PokedexController: UISearchBarDelegate{
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        navigationItem.titleView = nil
-        configureSearchBar()
-        inSearchMode = false
-        collectionView.reloadData()
+
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -193,6 +228,11 @@ extension PokedexController: UISearchBarDelegate{
 extension PokedexController: PokedexCellDelegate {
     
     func presentInfoView(withPokemon pokemon: Pokemon) {
+        
+        configureSearchBar(shouldShow: false)
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        
+        
         view.addSubview(infoView)
         infoView.configureViewComponents()
         infoView.delegate = self

@@ -12,67 +12,72 @@ class PokemonInfoController: UIViewController{
     
     // MARK: - Properties
       
-      var pokemon: Pokemon? {
-          didSet {
-              navigationItem.title = pokemon?.name?.capitalized
-              imageView.image = pokemon?.image
-              infoLabel.text = pokemon?.description
-              infoView.pokemon = pokemon
-          }
-      }
+    var pokemon: Pokemon? {
+        didSet {
+            navigationItem.title = pokemon?.name?.capitalized
+            imageView.image = pokemon?.image
+            infoLabel.text = pokemon?.description
+            infoView.pokemon = pokemon
+            
+            if let evoArray = pokemon?.evoArray{
+                firstEvoImageView.image = evoArray[0].image
+                if evoArray.count > 1{
+                    secondEvoImageView.image = evoArray[1].image
+                }
+            }
+        }
+    }
       
-      let imageView: UIImageView = {
-          let iv = UIImageView()
-          iv.contentMode = .scaleAspectFit
-          return iv
-      }()
+    let imageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        return iv
+    }()
       
-      let infoLabel: UILabel = {
-          let label = UILabel()
-          label.font = UIFont.systemFont(ofSize: 14)
-          label.numberOfLines = 0
-          return label
-      }()
+    let infoLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        return label
+    }()
       
-      let infoView: InfoView = {
-          let view = InfoView()
-          view.configureViewForInfoController()
-          return view
-      }()
+    let infoView: InfoView = {
+        let view = InfoView()
+        view.configureViewForInfoController()
+        return view
+    }()
       
-      lazy var evolutionView: UIView = {
-          let view = UIView()
-          view.backgroundColor = .mainPink()
+    lazy var evolutionView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .mainPink()
           
-          view.addSubview(evoLabel)
-          evoLabel.translatesAutoresizingMaskIntoConstraints = false
-          evoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-          evoLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        view.addSubview(evoLabel)
+        evoLabel.translatesAutoresizingMaskIntoConstraints = false
+        evoLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        evoLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
           
-          return view
-      }()
+        return view
+    }()
       
-      let evoLabel: UILabel = {
-          let label = UILabel()
-          label.textColor = .white
-          label.text = "Next Evolution: Charmeleon"
-          label.font = UIFont.systemFont(ofSize: 18)
-          return label
-      }()
+    let evoLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.text = "Evolution chain"
+        label.font = UIFont.systemFont(ofSize: 18)
+        return label
+    }()
       
-      let firstEvoImageView: UIImageView = {
-          let iv = UIImageView()
-          iv.contentMode = .scaleAspectFit
-          iv.backgroundColor = .gray
-          return iv
-      }()
+    let firstEvoImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        return iv
+    }()
       
-      let secondEvoImageView: UIImageView = {
-          let iv = UIImageView()
-          iv.contentMode = .scaleAspectFit
-          iv.backgroundColor = .gray
-          return iv
-      }()
+    let secondEvoImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        return iv
+    }()
     
     //MARK: Init
     override func viewDidLoad() {
