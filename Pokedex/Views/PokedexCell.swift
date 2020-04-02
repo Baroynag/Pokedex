@@ -8,9 +8,17 @@
 
 import UIKit
 
+protocol PokedexCellDelegate {
+
+    func presentInfoView(withPokemon pokemon: Pokemon)
+    
+}
+
 class PokedexCell: UICollectionViewCell {
     
     //MARK: - Properties
+
+    var delegate: PokedexCellDelegate?
     
     var pokemon: Pokemon?{
         didSet{
@@ -54,6 +62,14 @@ class PokedexCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Selectors
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer){
+        if sender.state == .began{
+            guard let pokemon = self.pokemon else {return}
+            delegate?.presentInfoView(withPokemon: pokemon)
+        }
+    }
+    
     //MARK: - Hepler functions
     
     private func configureViewComponents(){
@@ -61,9 +77,12 @@ class PokedexCell: UICollectionViewCell {
         self.layer.cornerRadius = 10
         self.clipsToBounds = true
         addSubview(imageView)
-        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, heigth: self.frame.height - 32)
+        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: self.frame.height - 32)
         
         addSubview(nameContainerView)
-        nameContainerView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, heigth: 32)
+        nameContainerView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
+        
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        self.addGestureRecognizer(longPressGestureRecognizer)
     }
 }

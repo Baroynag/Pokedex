@@ -16,11 +16,10 @@ class Pokemon{
     var image: UIImage?
     var weight: Int?
     var height: Int?
-    var defence: Int?
+    var defense: Int?
     var attack: Int?
     var description: String?
     var type: String?
-    var baseExperience: Int?
     
     init (id: Int, dictionary: [String: AnyObject]){
         
@@ -39,8 +38,8 @@ class Pokemon{
         if let height = dictionary["height"] as? Int{
             self.height = height
         }
-        if let defence = dictionary["defence"] as? Int{
-            self.defence = defence
+        if let defense = dictionary["defense"] as? Int{
+            self.defense = defense
         }
         if let attack = dictionary["attack"] as? Int{
             self.attack = attack
@@ -49,10 +48,7 @@ class Pokemon{
             self.description = description
         }
         if let type = dictionary["type"] as? String{
-            self.type = type
-        }
-        if let baseExperience = dictionary["baseExperience"] as? Int{
-            self.baseExperience = baseExperience
+            self.type = type.capitalized
         }
         
     }
