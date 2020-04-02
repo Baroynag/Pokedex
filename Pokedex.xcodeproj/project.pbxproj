@@ -18,6 +18,7 @@
 		143F573B24326552002C130D /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F573A24326552002C130D /* Extentions.swift */; };
 		143F573D243267C4002C130D /* PokedexCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F573C243267C4002C130D /* PokedexCellView.swift */; };
 		144E114B2435E8B800B33E54 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E114A2435E8B800B33E54 /* Protocols.swift */; };
+		144E11522435EE2400B33E54 /* PokemonInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144E11512435EE2400B33E54 /* PokemonInfoController.swift */; };
 		14B716162434EF5900BD497B /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B716152434EF5900BD497B /* InfoView.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		143F573A24326552002C130D /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		143F573C243267C4002C130D /* PokedexCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexCellView.swift; sourceTree = "<group>"; };
 		144E114A2435E8B800B33E54 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		144E11512435EE2400B33E54 /* PokemonInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonInfoController.swift; sourceTree = "<group>"; };
 		14B716152434EF5900BD497B /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,6 +80,7 @@
 			children = (
 				143F572C243245DF002C130D /* Info.plist */,
 				144E114C2435E9F700B33E54 /* MainScreen */,
+				144E11502435EDFC00B33E54 /* PokemonInfoScreen */,
 				144E114D2435EA0000B33E54 /* InfoViewScreen */,
 				143F573624324B65002C130D /* Models */,
 				143F573724324B7B002C130D /* Utils */,
@@ -131,6 +134,14 @@
 				143F5729243245DF002C130D /* LaunchScreen.storyboard */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		144E11502435EDFC00B33E54 /* PokemonInfoScreen */ = {
+			isa = PBXGroup;
+			children = (
+				144E11512435EE2400B33E54 /* PokemonInfoController.swift */,
+			);
+			path = PokemonInfoScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14B716162434EF5900BD497B /* InfoView.swift in Sources */,
+				144E11522435EE2400B33E54 /* PokemonInfoController.swift in Sources */,
 				143F573B24326552002C130D /* Extentions.swift in Sources */,
 				142422F62433BDB700D1F3F2 /* Service.swift in Sources */,
 				144E114B2435E8B800B33E54 /* Protocols.swift in Sources */,

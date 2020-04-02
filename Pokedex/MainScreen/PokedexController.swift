@@ -136,6 +136,13 @@ extension PokedexController{
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let controller = PokemonInfoController()
+        controller.pokemon = inSearchMode ? filteredPokemon[indexPath.row] : pokemon[indexPath.row]
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
