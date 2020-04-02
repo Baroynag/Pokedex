@@ -8,11 +8,6 @@
 
 import UIKit
 
-protocol InfoViewDelegate {
-    
-    func dismissInfoView(withPokemon pokemon: Pokemon?)
-    
-}
 
 class InfoView: UIView{
     

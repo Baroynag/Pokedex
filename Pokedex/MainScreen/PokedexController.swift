@@ -7,15 +7,17 @@
 //
 
 import UIKit
-private let reuseIdentifier = "PokedexCell"
 
 class PokedexController: UICollectionViewController {
+    
+    
     //MARK: - Properties
     
     private var pokemon = [Pokemon]()
     private var filteredPokemon = [Pokemon]()
     private var inSearchMode = false
     private var searchBar: UISearchBar!
+    private let reuseIdentifier = "PokedexCell"
     
     let infoView: InfoView = {
         let view = InfoView()
@@ -34,6 +36,7 @@ class PokedexController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureViewComponents()
         fetchPokemon()
         
@@ -73,7 +76,7 @@ class PokedexController: UICollectionViewController {
         configureSearchBarButton()
         
         collectionView.backgroundColor = .white
-        collectionView.register(PokedexCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(PokedexCellView.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         view.addSubview(visualEffectView)
         visualEffectView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -125,7 +128,7 @@ extension PokedexController{
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PokedexCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PokedexCellView
         
         cell.pokemon = inSearchMode ? filteredPokemon[indexPath.row] : pokemon[indexPath.row]
             
@@ -180,8 +183,6 @@ extension PokedexController: UISearchBarDelegate{
     
 }
 
-// MARK: - PokedexCellDelegate
-
 extension PokedexController: PokedexCellDelegate {
     
     func presentInfoView(withPokemon pokemon: Pokemon) {
@@ -203,13 +204,13 @@ extension PokedexController: PokedexCellDelegate {
         }
     }
     
- 
-    
 }
 
 extension PokedexController: InfoViewDelegate {
+    
     func dismissInfoView(withPokemon pokemon: Pokemon?) {
         dismissInfoView(pokemon: pokemon)
     }
     
 }
+

@@ -8,13 +8,8 @@
 
 import UIKit
 
-protocol PokedexCellDelegate {
 
-    func presentInfoView(withPokemon pokemon: Pokemon)
-    
-}
-
-class PokedexCell: UICollectionViewCell {
+class PokedexCellView: UICollectionViewCell {
     
     //MARK: - Properties
 
