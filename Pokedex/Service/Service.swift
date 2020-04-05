@@ -22,7 +22,8 @@ class Service {
             
             //handle error
             if let error = error{
-                print ("Failed to fetch data with error: ", error.localizedDescription)
+                print ("Failed to fetch data with error: ", error)
+                
                 return
             }
             

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Pokemon{
+class Pokemon {
     
     var id: Int?
     var name: String?
